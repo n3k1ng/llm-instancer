@@ -1,0 +1,70 @@
+!new HandleGenerator('HandleGenerator1')
+!HandleGenerator1.x:=10
+!HandleGenerator1.y:=20
+!HandleGenerator1.processingTime:=5
+!HandleGenerator1.counter:=50
+
+!new Tray('Tray1')
+!Tray1.x:=15
+!Tray1.y:=25
+!Tray1.capacity:=0
+
+!insert(HandleGenerator1,Tray1) into Output
+
+!new HandleGenerator('HandleGenerator2')
+!HandleGenerator2.x:=5
+!HandleGenerator2.y:=15
+!HandleGenerator2.processingTime:=4
+!HandleGenerator2.counter:=10
+
+!new HeadGenerator('HeadGenerator1')
+!HeadGenerator1.x:=6
+!HeadGenerator1.y:=16
+!HeadGenerator1.processingTime:=6
+!HeadGenerator1.counter:=5
+
+!new Tray('Tray2')
+!Tray2.x:=10
+!Tray2.y:=20
+!Tray2.capacity:=20
+
+!insert(HandleGenerator2,Tray2) into Output
+!insert(HeadGenerator1,Tray2) into Output
+
+!new Assembler('Assembler1')
+!Assembler1.x:=20
+!Assembler1.y:=30
+!Assembler1.processingTime:=8
+
+!new Tray('Tray3')
+!Tray3.x:=25
+!Tray3.y:=35
+!Tray3.capacity:=15
+
+!insert(Tray3,Assembler1) into Input
+
+!new Polisher('Polisher1')
+!Polisher1.x:=30
+!Polisher1.y:=40
+!Polisher1.processingTime:=10
+
+!new Tray('Tray4')
+!Tray4.x:=35
+!Tray4.y:=45
+!Tray4.capacity:=20
+
+!insert(Tray4,Polisher1) into Input
+
+!new HandleGenerator('HandleGenerator3')
+!HandleGenerator3.x:=40
+!HandleGenerator3.y:=50
+!HandleGenerator3.processingTime:=7
+!HandleGenerator3.counter:=30
+
+!new Tray('Tray5')
+!Tray5.x:=45
+!Tray5.y:=55
+!Tray5.capacity:=25
+
+!insert(Tray5,HandleGenerator3) into Input
+

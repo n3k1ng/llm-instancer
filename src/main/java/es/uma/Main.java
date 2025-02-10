@@ -1,13 +1,14 @@
 package es.uma;
 
-import dev.langchain4j.memory.ChatMemory;
-import dev.langchain4j.memory.chat.MessageWindowChatMemory;
 import dev.langchain4j.model.chat.ChatLanguageModel;
-import dev.langchain4j.model.googleai.GoogleAiGeminiChatModel;
-import dev.langchain4j.model.googleai.GoogleAiEmbeddingModel.GoogleAiEmbeddingModelBuilder;
 import dev.langchain4j.model.openai.OpenAiChatModel;
 import dev.langchain4j.service.AiServices;
 import org.apache.logging.log4j.Logger;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.locks.ReentrantLock;
+
 import org.apache.logging.log4j.LogManager;
 
 public class Main {
@@ -20,26 +21,8 @@ public class Main {
             .modelName("gpt-4o")
             .build();
 
-        // ChatLanguageModel AImodel = GoogleAiGeminiChatModel.builder()
-        //     .apiKey(System.getenv("GEMINI_API_KEY"))
-        //     .modelName("gemini-1.5-flash")
-        //     .logRequestsAndResponses(true)
-        //     .build();
-
         IModelAnalyzer modelAnalyzer = AiServices.builder(IModelAnalyzer.class)
             .chatLanguageModel(AImodel)
-            .build();
-
-        ChatMemory listCreatorMemory = MessageWindowChatMemory.withMaxMessages(24);
-        IListCreator listCreator = AiServices.builder(IListCreator.class)
-            .chatLanguageModel(AImodel)
-            .chatMemory(listCreatorMemory)
-            .build();
-
-        ChatMemory instantiatorMemory = MessageWindowChatMemory.withMaxMessages(24);
-        IModelInstantiator modelInstantiator = AiServices.builder(IModelInstantiator.class)
-            .chatLanguageModel(AImodel)
-            .chatMemory(instantiatorMemory)
             .build();
 
         // #endregion	
@@ -53,41 +36,31 @@ public class Main {
         
         // Read model and example
         String modelUML = Utils.readFile(PROMPT_PATH + "diagram.use"); 
-        String exampleSOIL = Utils.readFile(PROMPT_PATH + "examples/example_1.soil");
-        Use use = new Use();
 
         // Create class diagram modelDescription in plain English
         String modelDescription = modelAnalyzer.chat(modelUML);
         Utils.saveFile(modelDescription, INSTACE_PATH, "output.md");
 
-        // For each category, create instances
+        // For each category, create thread to create list and SOIL
+        final ReentrantLock lock = new ReentrantLock();
+        List<Thread> threads = new ArrayList<>();
         CATEGORY_PROMPTS.list.forEach( (categoryId, categoryPrompt) -> {
             
-            // Create list
-            String list = listCreator.chat(categoryPrompt, modelDescription);
-            Utils.saveFile("\n\n" + categoryPrompt + list, INSTACE_PATH, "output.md");
-
-            // Create SOIL and check constraints
-            String instanceSOIL = modelInstantiator.chat(list, exampleSOIL);
-            Utils.saveFile(instanceSOIL, INSTACE_PATH, "temp.soil", false);
-            if (!categoryId.equals("invalid")) { // Check only for valid instances
-                String check = use.check(PROMPT_PATH + "diagram.use", INSTACE_PATH + "temp.soil", modelDescription.substring(modelDescription.indexOf("Invariants")));  
-                
-                if (check != "OK")
-                    instanceSOIL = modelInstantiator.chat("The list and output is partially incorrect: \n" + check + "\n Please provide the corrected full output");    
-
-                Utils.saveFile(instanceSOIL + "\n\n", INSTACE_PATH, "outputValid.soil");
-            } else {
-                Utils.saveFile(instanceSOIL + "\n\n", INSTACE_PATH, "outputInvalid.soil");
-            }
-            
-            Utils.saveFile(instanceSOIL + "\n\n", INSTACE_PATH, "output" + ".soil");
-            Utils.saveFile(instanceSOIL + "\n\n", INSTACE_PATH, categoryId + ".soil");
-            Utils.saveFile("\n" + "```\n" + instanceSOIL + "\n```", INSTACE_PATH, "output.md");
+            Chatter chatter = new Chatter(categoryId, categoryPrompt, modelDescription, INSTACE_PATH, PROMPT_PATH, AImodel, lock);
+            Thread thread = new Thread(chatter);
+            thread.start();
+            threads.add(thread);
 
         });
 
-        use.close();
+        threads.forEach( (thread) -> {
+            try {
+                thread.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        });
+        
     }
 
 }

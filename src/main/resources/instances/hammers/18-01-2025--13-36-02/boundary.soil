@@ -1,0 +1,98 @@
+!new HandleGenerator('HandleGenerator1')
+!HandleGenerator1.x:=0
+!HandleGenerator1.y:=0
+!HandleGenerator1.processingTime:=5
+!HandleGenerator1.counter:=0
+
+!new HeadGenerator('HeadGenerator1')
+!HeadGenerator1.x:=5
+!HeadGenerator1.y:=0
+!HeadGenerator1.processingTime:=5
+!HeadGenerator1.counter:=0
+
+!new Tray('Tray1')
+!Tray1.capacity:=10
+
+!new Tray('Tray2')
+!Tray2.capacity:=10
+
+!insert(HandleGenerator1,Tray1) into Output
+!insert(HeadGenerator1,Tray2) into Output
+
+!new HandleGenerator('HandleGenerator2')
+!HandleGenerator2.x:=0
+!HandleGenerator2.y:=5
+!HandleGenerator2.processingTime:=10
+!HandleGenerator2.counter:=1000
+
+!new HeadGenerator('HeadGenerator2')
+!HeadGenerator2.x:=5
+!HeadGenerator2.y:=5
+!HeadGenerator2.processingTime:=10
+!HeadGenerator2.counter:=1000
+
+!new Tray('Tray3')
+!Tray3.capacity:=100
+
+!new Tray('Tray4')
+!Tray4.capacity:=100
+
+!insert(HandleGenerator2,Tray3) into Output
+!insert(HeadGenerator2,Tray4) into Output
+
+!new Assembler('Assembler1')
+!Assembler1.x:=10
+!Assembler1.y:=5
+!Assembler1.processingTime:=15
+
+!new Tray('Tray5')
+!Tray5.capacity:=50
+
+!insert(Tray3,Assembler1) into Input
+!insert(Tray4,Assembler1) into Input
+!insert(Assembler1,Tray5) into Output
+
+!new Polisher('Polisher1')
+!Polisher1.x:=15
+!Polisher1.y:=5
+!Polisher1.processingTime:=5
+
+!new Tray('Tray9')
+!Tray9.capacity:=50
+
+!insert(Tray5,Polisher1) into Input
+!insert(Polisher1,Tray9) into Output
+
+!new HandleGenerator('HandleGenerator3')
+!HandleGenerator3.x:=3
+!HandleGenerator3.y:=0
+!HandleGenerator3.processingTime:=8
+!HandleGenerator3.counter:=250
+
+!new HeadGenerator('HeadGenerator3')
+!HeadGenerator3.x:=8
+!HeadGenerator3.y:=0
+!HeadGenerator3.processingTime:=8
+!HeadGenerator3.counter:=250
+
+!new Tray('Tray6')
+!Tray6.capacity:=75
+
+!new Tray('Tray7')
+!Tray7.capacity:=75
+
+!insert(HandleGenerator3,Tray6) into Output
+!insert(HeadGenerator3,Tray7) into Output
+
+!new Assembler('Assembler2')
+!Assembler2.x:=12
+!Assembler2.y:=0
+!Assembler2.processingTime:=12
+
+!new Tray('Tray8')
+!Tray8.capacity:=50
+
+!insert(Tray6,Assembler2) into Input
+!insert(Tray7,Assembler2) into Input
+!insert(Assembler2,Tray8) into Output
+

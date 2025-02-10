@@ -1,0 +1,91 @@
+!new HandleGenerator('HandleGenerator_HG1')
+!HandleGenerator_HG1.Location:=(x: 5, y: 10)
+!HandleGenerator_HG1.processingTime:=2
+!HandleGenerator_HG1.counter:=100
+!new Tray('Tray_T1')
+!Tray_T1.capacity:=50
+!insert(HandleGenerator_HG1, Tray_T1) into Output
+
+!new HeadGenerator('HeadGenerator_HG2')
+!HeadGenerator_HG2.Location:=(x: 10, y: 10)
+!HeadGenerator_HG2.processingTime:=3
+!HeadGenerator_HG2.counter:=100
+!new Tray('Tray_T2')
+!Tray_T2.capacity:=50
+!insert(HeadGenerator_HG2, Tray_T2) into Output
+
+!new Assembler('Assembler_A1')
+!Assembler_A1.Location:=(x: 15, y: 10)
+!Assembler_A1.processingTime:=5
+!new Tray('Tray_T3')
+!Tray_T3.capacity:=50
+!insert(Tray_T1, Assembler_A1) into Input
+!insert(Tray_T2, Assembler_A1) into Input
+!insert(Assembler_A1, Tray_T3) into Output
+
+!new Polisher('Polisher_P1')
+!Polisher_P1.Location:=(x: 20, y: 10)
+!Polisher_P1.processingTime:=4
+!new Tray('Tray_T4')
+!Tray_T4.capacity:=50
+!insert(Tray_T3, Polisher_P1) into Input
+!insert(Polisher_P1, Tray_T4) into Output
+
+!repeat 40 times
+!new Handle('Handle_H', Tray_T1) into Content
+
+!repeat 40 times
+!new Head('Head_H', Tray_T2) into Content
+
+!repeat 30 times
+!new Hammer('Hammer_H', Tray_T3) isPolished:=False into Content
+
+!repeat 30 times
+!new Hammer('Hammer_H', Tray_T4) isPolished:=True into Content
+
+
+!new HandleGenerator('HandleGenerator_HG3')
+!HandleGenerator_HG3.Location:=(x: 8, y: 20)
+!HandleGenerator_HG3.processingTime:=2
+!HandleGenerator_HG3.counter:=150
+!new Tray('Tray_T5')
+!Tray_T5.capacity:=60
+!insert(HandleGenerator_HG3, Tray_T5) into Output
+
+!new HeadGenerator('HeadGenerator_HG4')
+!HeadGenerator_HG4.Location:=(x: 12, y: 20)
+!HeadGenerator_HG4.processingTime:=3
+!HeadGenerator_HG4.counter:=150
+!new Tray('Tray_T6')
+!Tray_T6.capacity:=60
+!insert(HeadGenerator_HG4, Tray_T6) into Output
+
+!new Assembler('Assembler_A2')
+!Assembler_A2.Location:=(x: 18, y: 20)
+!Assembler_A2.processingTime:=6
+!new Tray('Tray_T7')
+!Tray_T7.capacity:=60
+!insert(Tray_T5, Assembler_A2) into Input
+!insert(Tray_T6, Assembler_A2) into Input
+!insert(Assembler_A2, Tray_T7) into Output
+
+!new Polisher('Polisher_P2')
+!Polisher_P2.Location:=(x: 25, y: 20)
+!Polisher_P2.processingTime:=5
+!new Tray('Tray_T8')
+!Tray_T8.capacity:=60
+!insert(Tray_T7, Polisher_P2) into Input
+!insert(Polisher_P2, Tray_T8) into Output
+
+!repeat 50 times
+!new Handle('Handle_H', Tray_T5) into Content
+
+!repeat 50 times
+!new Head('Head_H', Tray_T6) into Content
+
+!repeat 45 times
+!new Hammer('Hammer_H', Tray_T7) isPolished:=False into Content
+
+!repeat 45 times
+!new Hammer('Hammer_H', Tray_T8) isPolished:=True into Content
+

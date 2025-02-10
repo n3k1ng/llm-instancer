@@ -1,0 +1,92 @@
+```
+!new HandleGenerator('hg1')
+!hg1.x:=10
+!hg1.y:=20
+!hg1.processingTime:=5
+!hg1.counter:=100
+
+!new Tray('t1')
+!t1.capacity:=1000
+
+!new Assembler('a1')
+!a1.x:=15
+!a1.y:=25
+!a1.processingTime:=10
+
+!new Tray('t2')
+!t2.capacity:=100
+
+!new Polisher('p1')
+!p1.x:=20
+!p1.y:=30
+!p1.processingTime:=8
+
+!new Tray('t3')
+!t3.capacity:=50
+
+!insert(hg1,t1) into Output
+!insert(t1,a1) into Input
+!insert(a1,t2) into Output
+!insert(t2,p1) into Input
+!insert(p1,t3) into Output
+
+!new HeadGenerator('hg2')
+!hg2.x:=5
+!hg2.y:=10
+!hg2.processingTime:=6
+!hg2.counter:=500
+
+!new Tray('t4')
+!t4.capacity:=500
+
+!new Assembler('a2')
+!a2.x:=10
+!a2.y:=15
+!a2.processingTime:=10
+
+!new Tray('t5')
+!t5.capacity:=50
+
+!new Polisher('p2')
+!p2.x:=15
+!p2.y:=20
+!p2.processingTime:=5
+
+!new Tray('t6')
+!t6.capacity:=50
+
+!insert(hg2,t4) into Output
+!insert(t4,a2) into Input
+!insert(a2,t5) into Output
+!insert(t5,p2) into Input
+!insert(p2,t6) into Output
+
+!new HandleGenerator('hg3')
+!hg3.x:=2
+!hg3.y:=3
+!hg3.processingTime:=4
+!hg3.counter:=1000
+
+!new HeadGenerator('hg4')
+!hg4.x:=3
+!hg4.y:=4
+!hg4.processingTime:=4
+!hg4.counter:=1000
+
+!new Tray('t7')
+!t7.capacity:=500
+
+!new Assembler('a3')
+!a3.x:=5
+!a3.y:=6
+!a3.processingTime:=10
+
+!new Tray('t8')
+!t8.capacity:=100
+
+!insert(hg3,t7) into Output
+!insert(hg4,t7) into Output
+!insert(t7,a3) into Input
+!insert(a3,t8) into Output
+```
+
